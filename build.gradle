@@ -1,0 +1,84 @@
+buildscript {
+  repositories {
+    maven {
+      url "https://plugins.gradle.org/m2/"
+    }
+  }
+  dependencies {
+    classpath "org.sonarsource.scanner.gradle:sonarqube-gradle-plugin:2.2.1"
+  }
+}
+
+apply plugin: "org.sonarqube"
+
+apply plugin: 'java'
+apply plugin: 'war'
+apply plugin: 'idea'
+apply plugin: 'org.akhikhl.gretty'
+//apply from   : 'https://raw.github.com/akhikhl/gretty/master/pluginScripts/gretty.plugin'
+
+//def jclOverSlf4jVersion = "1.7.14"
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+webAppDirName = 'WebContent'
+
+sourceSets {
+    main {
+        java {
+            srcDirs = ['src']
+        }
+        resources {
+            srcDirs = ['src/resources']
+        }
+    }
+    test {
+      java {
+        srcDirs = ['test']
+      }
+    }
+}
+
+repositories {
+    mavenLocal()
+    mavenCentral()
+}
+
+dependencies {
+//    compile 'org.slf4j:jcl-over-slf4j:' + jclOverSlf4jVersion
+
+
+    compile 'ch.qos.logback:logback-classic:1.+'
+    compile 'org.springframework:spring-webmvc:4.+'
+    // https://mvnrepository.com/artifact/org.springframework/spring-jdbc
+    compile group: 'org.springframework', name: 'spring-jdbc', version: '4.1.0.RELEASE'
+
+    compile 'javax.servlet:jstl:1.+'
+
+    //include in compile only, exclude in the war
+    providedCompile 'javax.servlet:servlet-api:2.+'
+
+    testCompile('junit:junit:4.12') {
+      exclude group: 'org.hamcrest'
+    }
+    testCompile 'org.hamcrest:hamcrest-library:1.3'
+    // https://mvnrepository.com/artifact/org.mockito/mockito-core
+    testCompile group: 'org.mockito', name: 'mockito-core', version: '1.9.5'
+}
+
+//Gretty Embedded Jetty
+buildscript {
+  repositories {
+    jcenter()
+  }
+
+  dependencies {
+    classpath 'org.akhikhl.gretty:gretty:+'
+  }
+}
+
+gretty {
+  port = 8080
+  servletContainer = 'jetty9'
+}
