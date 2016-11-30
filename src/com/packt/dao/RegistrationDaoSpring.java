@@ -2,11 +2,11 @@ package com.packt.dao;
 
 import org.springframework.jdbc.core.JdbcTemplate;
 
-public class RegistratioDaoSpring implements RegistrationDao {
+public class RegistrationDaoSpring implements RegistrationDao {
 
 	private final JdbcTemplate jdbcTemplate;
 
-	public RegistratioDaoSpring(JdbcTemplate jdbcTemplate) {
+	public RegistrationDaoSpring(JdbcTemplate jdbcTemplate) {
 		this.jdbcTemplate = jdbcTemplate;
 		new DatabaseManager().go(null);
 	}
