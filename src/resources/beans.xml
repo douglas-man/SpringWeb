@@ -24,4 +24,15 @@
 	<bean id="registrationService" class="com.packt.controller.RegistrationService" scope="request" p:userId="#{request.getParameter('userId')}" p:password="#{request.getParameter('password')}" p:firstName="#{request.getParameter('fname')}" p:lastName="#{request.getParameter('lname')}">
 		<aop:scoped-proxy />
 	</bean>
+	<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<property name="driverClassName" value="org.apache.derby.jdbc.EmbeddedDriver" />
+		<property name="url" value="jdbc:derby:derbyDB;create=true" />
+		<property name="username" value="App" />
+	</bean>
+	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<constructor-arg ref="dataSource" />
+	</bean>
+	<bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
 </beans>
