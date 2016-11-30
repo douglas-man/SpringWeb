@@ -1,5 +1,7 @@
 package com.packt.controller;
 
+import com.packt.model.LoginInfo;
+
 import java.io.Serializable;
 import java.util.Date;
 
@@ -23,7 +25,7 @@ public class LoginController implements Serializable {
 
 	@RequestMapping({ "/", "/login" })
 	public String onStartUp(ModelMap model) {
-//		model.addAttribute("loginInfo", new LoginInfo());
+		model.addAttribute("loginInfo", new LoginInfo());
 		return "login";
 
 	}
